@@ -1,9 +1,20 @@
 import React from "react";
 import {connect} from "react-redux";
 import {
-    Text, View,
+    View,
 } from 'react-native';
-import { Header, } from 'react-native-elements';
+import { Header, List, ListItem,} from 'react-native-elements';
+
+const list = [
+    {
+        name: 'otc-test.xianyiscm.com',
+        times: '30ms',
+    },
+    {
+        name: 'ctc-test.xianyiscm.com',
+        times: '33ms',
+    },
+]
 
 class ServersScreen extends React.Component {
     constructor(props) {
@@ -17,10 +28,22 @@ class ServersScreen extends React.Component {
         return (
             <View>
                 <Header
+                    leftComponent={{ icon: 'arrow-back', color: '#110c2e', height: 20 }}
                     outerContainerStyles={{ backgroundColor: '#f5f5f5' }}
-                    centerComponent={{ text: {title}, style: { color: '#110c2e' } }}
+                    centerComponent={{ text: title, style: { color: '#110c2e' } }}
                 />
-                <Text>sss</Text>
+                <List containerStyle={{marginBottom: 20}}>
+                    {
+                        list.map((l, i) => (
+                            <ListItem
+                                roundAvatar
+                                key={i}
+                                title={l.name}
+                                badge={{ value: l.times, textStyle: { color: 'green' }, containerStyle: { backgroundColor: '#FFF' } }}
+                            />
+                        ))
+                    }
+                </List>
             </View>
         );
     }
