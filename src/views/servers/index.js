@@ -17,10 +17,18 @@ const list = [
 ]
 
 class ServersScreen extends React.Component {
+
     constructor(props) {
         super(props);
         // 获取传参
         this.title = props.navigation.state.params.title;
+    }
+
+    _onGoToMain() {
+        this.props.navigation.dispatch({
+            type: 'Main',
+            mode: 'reset',
+        })
     }
 
     render() {
@@ -28,9 +36,11 @@ class ServersScreen extends React.Component {
         return (
             <View>
                 <Header
-                    leftComponent={{ icon: 'arrow-back', color: '#110c2e', height: 20 }}
+                    placement="left"
+                    leftComponent={{ icon: 'arrow-back', color: '#110c2e',
+                        onPress: ()=> this._onGoToMain() }}
                     outerContainerStyles={{ backgroundColor: '#f5f5f5' }}
-                    centerComponent={{ text: title, style: { color: '#110c2e' } }}
+                    centerComponent={{ text: title, style: { color: '#110c2e', height: 18 } }}
                 />
                 <List containerStyle={{marginBottom: 20}}>
                     {

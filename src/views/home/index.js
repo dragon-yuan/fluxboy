@@ -18,9 +18,17 @@ class HomeScreen extends React.Component {
                 params: {tag: 'test', title: '测试环境服务列表'}
             })
         } else if ('beta' == key) {
-
+            this.props.navigation.dispatch({
+                type: 'ServersScreen',
+                mode: 'reset',
+                params: {tag: 'beta', title: '预生产环境服务列表'}
+            })
         } else if ('prod' == key) {
-
+            this.props.navigation.dispatch({
+                type: 'ServersScreen',
+                mode: 'reset',
+                params: {tag: 'prod', title: '正式环境服务列表'}
+            })
         }
     }
     render() {
@@ -46,7 +54,7 @@ class HomeScreen extends React.Component {
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={()=>{this._onPress.bind(this, 'beta')}}>
+                    onPress={()=>{this._onPress('beta')}}>
                     <View>
                         <ListItem
                             title={'预生产环境'}
@@ -55,7 +63,7 @@ class HomeScreen extends React.Component {
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={()=>{this._onPress.bind(this, 'prod')}}>
+                    onPress={()=>{this._onPress('prod')}}>
                     <View>
                         <ListItem
                             title={'生产环境'}
