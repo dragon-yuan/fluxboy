@@ -2,14 +2,22 @@ import React from "react";
 import { connect } from 'react-redux';
 import { ListItem, Header, Tile } from 'react-native-elements';
 import { View, TouchableOpacity } from 'react-native';
+import Toast from '../../utils/toast';
+import { fetchData } from '../../components/http/app';
+
 class HomeScreen extends React.Component {
 
     constructor(props) {
         super(props);
     }
 
+    _testApi() {
+        this.props.testApi();
+    }
+
     // TouchableOpacity点击事件
     _onPress(key) {
+        this._testApi();
         // 页面跳转
         if ('test' == key) {
             this.props.navigation.dispatch({
@@ -48,7 +56,7 @@ class HomeScreen extends React.Component {
                     onPress={()=>{this._onPress('test')}}>
                     <View>
                         <ListItem
-                            title={'测试环境'}
+                            title={'Test环境'}
                             leftIcon={{name: 'title'}}
                         />
                     </View>
@@ -57,7 +65,7 @@ class HomeScreen extends React.Component {
                     onPress={()=>{this._onPress('beta')}}>
                     <View>
                         <ListItem
-                            title={'预生产环境'}
+                            title={'Beta环境'}
                             leftIcon={{name: 'format-bold'}}
                         />
                     </View>
@@ -66,7 +74,7 @@ class HomeScreen extends React.Component {
                     onPress={()=>{this._onPress('prod')}}>
                     <View>
                         <ListItem
-                            title={'生产环境'}
+                            title={'Prod环境'}
                             leftIcon={{name: 'local-parking'}}
                         />
                     </View>
@@ -85,6 +93,16 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         dispatch,
+        testApi: (body) => {
+            dispatch(fetchData({
+                body,
+                method: 'POST',
+                api: '/api/getFacebook',
+                success: (data) => {
+                    return Toast.show(data.code);
+                }
+            }))
+        },
     };
 }
 

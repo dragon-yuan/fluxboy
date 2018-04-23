@@ -4,9 +4,11 @@ import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import rootReducer from '../reducers/index';
+import http from '../components/http/http';
 
 const middelwares = [];
 
+middelwares.push(http);
 middelwares.push(thunkMiddleware);
 
 if (process.env.NODE_ENV === 'development') {
