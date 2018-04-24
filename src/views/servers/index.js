@@ -1,9 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
 import {
-    View,
+    View, ScrollView,
 } from 'react-native';
 import { Header, List, ListItem,} from 'react-native-elements';
+import { fetchData } from '../../components/http/app';
 
 const list = [
     {
@@ -16,12 +17,30 @@ const list = [
     },
 ]
 
+
 class ServersScreen extends React.Component {
 
     constructor(props) {
         super(props);
+        // 定义变量
+        this.state = {
+            apiList: [],
+        }
         // 获取传参
         this.title = props.navigation.state.params.title;
+        // 调用方法
+        this._testApi();
+    }
+
+    // 调用接口
+    _testApi() {
+        this.props.testApi({
+            // body
+        }, (data) => {
+            this.setState({
+                apiList: data
+            })
+        });
     }
 
     _onGoToMain() {
@@ -42,18 +61,22 @@ class ServersScreen extends React.Component {
                     outerContainerStyles={{ backgroundColor: '#f5f5f5' }}
                     centerComponent={{ text: title, style: { color: '#110c2e', height: 18 } }}
                 />
-                <List containerStyle={{marginBottom: 20}}>
-                    {
-                        list.map((l, i) => (
-                            <ListItem
-                                roundAvatar
-                                key={i}
-                                title={l.name}
-                                badge={{ value: l.times, textStyle: { color: 'green' }, containerStyle: { backgroundColor: '#FFF' } }}
-                            />
-                        ))
-                    }
-                </List>
+                <ScrollView contentContainerStyle={{ paddingVertical: 0, }}>
+                    <List containerStyle={{ marginTop: 0, }}>
+                        {
+                            this.state.apiList.map((l, i) => (
+                                <ListItem
+                                    horizontal={true}
+                                    roundAvatar
+                                    key={i}
+                                    title={l.message}
+                                    badge={{ value: l.id, textStyle: { color: 'green' }, containerStyle: { backgroundColor: '#FFF' } }}
+                                />
+                            ))
+                        }
+                    </List>
+                    <View style={{height: 70}}></View>
+                </ScrollView>
             </View>
         );
     }
@@ -68,6 +91,16 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         dispatch,
+        testApi: (body, successMethod) => {
+            dispatch(fetchData({
+                body,
+                method: 'POST',
+                api: '/api/getFacebook',
+                success: (data) => {
+                    successMethod(data.list)
+                }
+            }))
+        },
     };
 }
 

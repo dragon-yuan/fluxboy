@@ -2,8 +2,6 @@ import React from "react";
 import { connect } from 'react-redux';
 import { ListItem, Header, Tile } from 'react-native-elements';
 import { View, TouchableOpacity } from 'react-native';
-import Toast from '../../utils/toast';
-import { fetchData } from '../../components/http/app';
 
 class HomeScreen extends React.Component {
 
@@ -11,13 +9,8 @@ class HomeScreen extends React.Component {
         super(props);
     }
 
-    _testApi() {
-        this.props.testApi();
-    }
-
     // TouchableOpacity点击事件
     _onPress(key) {
-        this._testApi();
         // 页面跳转
         if ('test' == key) {
             this.props.navigation.dispatch({
@@ -47,7 +40,7 @@ class HomeScreen extends React.Component {
                     centerComponent={{ text: 'FluxBoy', style: { color: '#110c2e' } }}
                 />
                 <Tile
-                    imageSrc={{ uri: 'https://img-dragon-resume.oss-cn-beijing.aliyuncs.com/banner-net.png' }}
+                    imageSrc={{ uri: 'https://img-dragon-resume.oss-cn-beijing.aliyuncs.com/app-fluxboy/banner-net.png' }}
                     title="应用服务"
                     caption="环境监控列表"
                     featured
@@ -93,16 +86,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         dispatch,
-        testApi: (body) => {
-            dispatch(fetchData({
-                body,
-                method: 'POST',
-                api: '/api/getFacebook',
-                success: (data) => {
-                    return Toast.show(data.code);
-                }
-            }))
-        },
     };
 }
 
