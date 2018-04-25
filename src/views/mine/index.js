@@ -19,12 +19,12 @@ export default class MineScreen extends React.Component {
 
     render() {
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, backgroundColor: '#3C3C52' }}>
                 <Header
                     outerContainerStyles={{ backgroundColor: '#f5f5f5' }}
                     centerComponent={{ text: 'FluxBoy', style: { color: '#110c2e' } }}
                 />
-                <View style={{ height: 150, backgroundColor: '#3C3C52' }}>
+                <View style={styles.myInfoStyle}>
                     <Avatar
                         large
                         rounded
@@ -58,48 +58,18 @@ export default class MineScreen extends React.Component {
                         iconStyle={{ alignSelf: 'flex-end', marginRight: 80, marginTop: -40 }}
                     />
                 </View>
-                {/*<View style={{ marginTop: 10, backgroundColor: '#FFF', }}>*/}
-                    {/*<TouchableOpacity*/}
-                        {/*onPress={()=>{}}>*/}
-                        {/*<View>*/}
-                            {/*<ListItem*/}
-                                {/*title={'设置'}*/}
-                                {/*leftIcon={{name: 'settings'}}*/}
-                            {/*/>*/}
-                        {/*</View>*/}
-                    {/*</TouchableOpacity>*/}
-                {/*</View>*/}
-                {/*<View style={ styles.imageIconsViewStyle }>*/}
-                    {/*<View style={styles.btnViewStyle}>*/}
-                        {/*<TouchableOpacity*/}
-                            {/*onPress={()=>{this._onPress()}}>*/}
-                        {/*<Image*/}
-                            {/*source={require('../../../assets/img/mine/logo-me.png')}*/}
-                            {/*style={styles.imageIconStyle}*/}
-                            {/*onPress={()=>this._onPress()}*/}
-                        {/*/>*/}
-                        {/*</TouchableOpacity>*/}
-                    {/*</View>*/}
-                    {/*<View style={styles.btnViewStyle}>*/}
-                        {/*<TouchableOpacity*/}
-                            {/*onPress={()=>{this._onPress()}}>*/}
-                        {/*<Image*/}
-                            {/*source={require('../../../assets/img/mine/logo-message.png')}*/}
-                            {/*style={styles.imageIconStyle}*/}
-                        {/*/>*/}
-                        {/*</TouchableOpacity>*/}
-                    {/*</View>*/}
-                    {/*<View style={styles.btnViewStyle}>*/}
-                        {/*<TouchableOpacity*/}
-                            {/*onPress={()=>{this._onPress()}}>*/}
-                        {/*<Image*/}
-                            {/*source={require('../../../assets/img/mine/logo-setting.png')}*/}
-                            {/*style={styles.imageIconStyle}*/}
-                        {/*/>*/}
-                        {/*</TouchableOpacity>*/}
-                    {/*</View>*/}
-                {/*</View>*/}
-                <View style={styles.footerStyle}>
+                <View style={styles.dataLineViewStyle}>
+                    <Text style={styles.dataTextStyle}>Data Statistics</Text>
+                    <View style={styles.lineStyle}></View>
+                </View>
+                <View style={styles.dataViewStyle}>
+                    <View style={styles.dataViewContentStyle}>
+                        <Text style={styles.dataTitleStyle}>监控服务总数</Text>
+                        <Text style={styles.dataServerStyle}>36</Text>
+                    </View>
+                    <View style={styles.dataViewContentStyle}>
+                        <Text style={styles.dataTitleStyle}>服务波动总数</Text>
+                    </View>
                 </View>
             </View>
         );
@@ -108,6 +78,14 @@ export default class MineScreen extends React.Component {
 
 
 const styles = StyleSheet.create({
+    myInfoStyle: {
+        marginTop: 10,
+        height: 150,
+        backgroundColor: '#3C435F',
+        width: width - 24,
+        marginLeft: 12,
+        borderRadius: 10,
+    },
     imageIconsViewStyle: {
         backgroundColor: '#3C3C52',
         height: 100,
@@ -130,6 +108,47 @@ const styles = StyleSheet.create({
         // #FE85A2
         // #F64714
         backgroundColor: '#848484'
+    },
+    dataLineViewStyle: {
+        height: 20,
+    },
+    dataViewStyle: {
+        marginTop: 15,
+        height: 200,
+        flexDirection: 'row'
+    },
+    dataViewContentStyle: {
+        height: 200,
+        backgroundColor: '#3C435F',
+        width: width / 2 - 20,
+        marginLeft: 12,
+        borderRadius: 10,
+    },
+    dataTextStyle: {
+        color: '#AAADB4',
+        marginTop: 4,
+        marginLeft: 16,
+        fontSize: 14,
+        fontWeight: 'bold',
+    },
+    lineStyle: {
+        backgroundColor: '#47B9B2',
+        width: 125,
+        height: 3,
+        marginTop: 3,
+        marginLeft: 17,
+    },
+    dataTitleStyle: {
+        color: '#707488',
+        fontSize: 13,
+        marginLeft: 15,
+        marginTop: 175,
+    },
+    dataServerStyle: {
+        color: '#FFF',
+        fontSize: 30,
+        marginLeft: 15,
+        marginTop: -60,
     }
 })
 
