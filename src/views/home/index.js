@@ -45,33 +45,35 @@ class HomeScreen extends React.Component {
                     caption="环境监控列表"
                     featured
                 />
-                <TouchableOpacity
-                    onPress={()=>{this._onPress('test')}}>
-                    <View>
-                        <ListItem
-                            title={'Test环境'}
-                            leftIcon={{name: 'title'}}
-                        />
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={()=>{this._onPress('beta')}}>
-                    <View>
-                        <ListItem
-                            title={'Beta环境'}
-                            leftIcon={{name: 'format-bold'}}
-                        />
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={()=>{this._onPress('prod')}}>
-                    <View>
-                        <ListItem
-                            title={'Prod环境'}
-                            leftIcon={{name: 'local-parking'}}
-                        />
-                    </View>
-                </TouchableOpacity>
+                <View style={{ backgroundColor: '#FFF', }}>
+                    <TouchableOpacity
+                        onPress={()=>{this._onPress('test')}}>
+                        <View>
+                            <ListItem
+                                title={'Test环境'}
+                                leftIcon={{name: 'title'}}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={()=>{this._onPress('beta')}}>
+                        <View>
+                            <ListItem
+                                title={'Beta环境'}
+                                leftIcon={{name: 'format-bold'}}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={()=>{this._onPress('prod')}}>
+                        <View>
+                            <ListItem
+                                title={'Prod环境'}
+                                leftIcon={{name: 'local-parking'}}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </View>
         );
     }
