@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     myInfoStyle: {
         marginTop: 10,
         height: 150,
-        backgroundColor: '#483D8B',
+        backgroundColor: '#3C435F',
         width: width - 24,
         marginLeft: 12,
         borderRadius: 10,
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     },
     dataViewContentStyle: {
         height: 186,
-        backgroundColor: '#483D8B',
+        backgroundColor: '#3C435F',
         width: width / 2 - 20,
         marginLeft: 12,
         borderRadius: 10,
@@ -172,7 +172,8 @@ const styles = StyleSheet.create({
     },
     someButtonStyle: {
         borderRadius: 5,
-        backgroundColor: '#483D8B',
+        // #483D80
+        backgroundColor: '#3C435F',
     }
 })
 
