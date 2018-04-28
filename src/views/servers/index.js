@@ -1,10 +1,12 @@
 import React from "react";
 import {connect} from "react-redux";
 import {
-    View, ScrollView,
+    View, ScrollView, StyleSheet,
 } from 'react-native';
 import { Header, List, ListItem,} from 'react-native-elements';
 import { fetchData } from '../../components/http/app';
+import '../../components/http/setting';
+import {HOST} from "../../components/http/setting";
 
 const list = [
     {
@@ -30,6 +32,9 @@ class ServersScreen extends React.Component {
         this.title = props.navigation.state.params.title;
         // 调用方法
         this._testApi();
+        setInterval(()=>{
+            this._testApi();
+        }, 15000);
     }
 
     // 调用接口
@@ -69,8 +74,12 @@ class ServersScreen extends React.Component {
                                     horizontal={true}
                                     roundAvatar
                                     key={i}
-                                    title={l.message}
-                                    badge={{ value: l.id, textStyle: { color: 'green' }, containerStyle: { backgroundColor: '#FFF' } }}
+                                    title={l.friendlyName}
+                                    titleStyle={[l.serverStatue === 'up' ? styles.textGreen : styles.textRed]}
+                                    rightTitle={l.averageResponseTime}
+                                    rightTitleStyle={
+                                        [parseFloat(l.averageResponseTime) <= 200 ? styles.textGreen : parseFloat(l.averageResponseTime) <= 500 ? styles.textYellow : styles.textRed]
+                                    }
                                 />
                             ))
                         }
@@ -95,9 +104,9 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(fetchData({
                 body,
                 method: 'POST',
-                api: '/api/getFacebook',
+                api: '/api/robot/getMonitors/test',
                 success: (data) => {
-                    successMethod(data.list)
+                    successMethod(data)
                 }
             }))
         },
@@ -105,3 +114,15 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ServersScreen);
+
+const styles = StyleSheet.create({
+    textGreen: {
+       color: 'green'
+    },
+    textYellow: {
+        color: 'orange'
+    },
+    textRed: {
+        color: 'red'
+    }
+});
