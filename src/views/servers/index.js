@@ -6,19 +6,6 @@ import {
 import { Header, List, ListItem,} from 'react-native-elements';
 import { fetchData } from '../../components/http/app';
 import '../../components/http/setting';
-import {HOST} from "../../components/http/setting";
-
-const list = [
-    {
-        name: 'otc-test.xianyiscm.com',
-        times: '30ms',
-    },
-    {
-        name: 'ctc-test.xianyiscm.com',
-        times: '33ms',
-    },
-]
-
 
 class ServersScreen extends React.Component {
 
@@ -30,17 +17,18 @@ class ServersScreen extends React.Component {
         }
         // 获取传参
         this.title = props.navigation.state.params.title;
+        this.tag = props.navigation.state.params.tag;
         // 调用方法
-        this._testApi();
-        setInterval(()=>{
-            this._testApi();
-        }, 15000);
+        this._getUpTimeRobotApi(this.tag);
+        // setInterval(()=>{
+        //     this._testApi();
+        // }, 15000);
     }
 
     // 调用接口
-    _testApi() {
-        this.props.testApi({
-            // body
+    _getUpTimeRobotApi(tag) {
+        this.props._getUpTimeRobotApi({
+            tag: tag
         }, (data) => {
             this.setState({
                 apiList: data
@@ -100,11 +88,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         dispatch,
-        testApi: (body, successMethod) => {
+        _getUpTimeRobotApi: (body, successMethod) => {
             dispatch(fetchData({
                 body,
                 method: 'POST',
-                api: '/api/robot/getMonitors/test',
+                api: '/api/robot/getMonitors/' + body.tag,
                 success: (data) => {
                     successMethod(data)
                 }

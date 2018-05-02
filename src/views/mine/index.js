@@ -5,16 +5,25 @@ import {
 import { Avatar, Header, Icon, Button, } from 'react-native-elements';
 // 获取移动端屏幕宽度
 const { width } = Dimensions.get('window');
+import Storage from '../../utils/storage'
 
 export default class MineScreen extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            loginName: '',
+            roleName: '',
+        }
+        Storage.get('user').then(result => {
+            this.setState({loginName: result.loginName});
+            this.setState({roleName: result.roleName});
+        });
     }
 
     render() {
         return (
-            <View style={{ flex: 1, backgroundColor: '#3C3C52' }}>
+            <View style={{ flex: 1 }}>
                 <Header
                     outerContainerStyles={{ backgroundColor: '#f5f5f5' }}
                     centerComponent={{ text: 'FluxBoy', style: { color: '#110c2e' } }}
@@ -28,9 +37,13 @@ export default class MineScreen extends React.Component {
                         containerStyle={{ marginTop: 40, marginLeft: 20 }}
                     />
                     <Text style={{ color: '#FFF', fontWeight: 'bold',
-                        marginLeft: 111, marginTop: -61, fontSize: 17, }}>admin</Text>
+                        marginLeft: 111, marginTop: -61, fontSize: 17, }}>
+                        {this.state.loginName}
+                    </Text>
                     <Text style={{ color: '#FFF', marginLeft: 110, marginTop: 6,
-                        fontSize: 15, }}>系统管理员</Text>
+                        fontSize: 15, }}>
+                        {this.state.roleName}
+                    </Text>
                     <Icon
                         name='md-pulse'
                         type='ionicon'
@@ -53,34 +66,34 @@ export default class MineScreen extends React.Component {
                         iconStyle={{ alignSelf: 'flex-end', marginRight: 80, marginTop: -40 }}
                     />
                 </View>
-                <View style={styles.dataLineViewStyle}>
-                    <Text style={styles.dataTextStyle}>Data Statistics</Text>
-                    <View style={styles.lineStyle}></View>
-                </View>
-                <View style={styles.dataViewStyle}>
-                    <View style={styles.dataViewContentStyle}>
-                        <View style={styles.dataImgViewStyle}>
-                            <Image source={require('../../../assets/img/mine/bot2.png')}
-                                   style={styles.dataImgStyle} />
-                        </View>
-                        <View style={styles.dataBoxStyle}>
-                            <Text style={styles.dataServerStyle}>36</Text>
-                            <Text style={styles.dataUnitStyle}>num</Text>
-                        </View>
-                        <Text style={styles.dataTitleStyle}>监控服务总数</Text>
-                    </View>
-                    <View style={styles.dataViewContentStyle}>
-                        <View style={styles.dataImgViewStyle}>
-                            <Image source={require('../../../assets/img/mine/bot1.png')}
-                                   style={styles.dataImgStyle} />
-                        </View>
-                        <View style={styles.dataBoxStyle}>
-                            <Text style={styles.dataServerStyle}>8</Text>
-                            <Text style={styles.dataUnitStyle}>times</Text>
-                        </View>
-                        <Text style={styles.dataTitleStyle}>服务波动总数</Text>
-                    </View>
-                </View>
+                {/*<View style={styles.dataLineViewStyle}>*/}
+                    {/*<Text style={styles.dataTextStyle}>Data Statistics</Text>*/}
+                    {/*<View style={styles.lineStyle}></View>*/}
+                {/*</View>*/}
+                {/*<View style={styles.dataViewStyle}>*/}
+                    {/*<View style={styles.dataViewContentStyle}>*/}
+                        {/*<View style={styles.dataImgViewStyle}>*/}
+                            {/*<Image source={require('../../../assets/img/mine/bot2.png')}*/}
+                                   {/*style={styles.dataImgStyle} />*/}
+                        {/*</View>*/}
+                        {/*<View style={styles.dataBoxStyle}>*/}
+                            {/*<Text style={styles.dataServerStyle}>36</Text>*/}
+                            {/*<Text style={styles.dataUnitStyle}>num</Text>*/}
+                        {/*</View>*/}
+                        {/*<Text style={styles.dataTitleStyle}>监控服务总数</Text>*/}
+                    {/*</View>*/}
+                    {/*<View style={styles.dataViewContentStyle}>*/}
+                        {/*<View style={styles.dataImgViewStyle}>*/}
+                            {/*<Image source={require('../../../assets/img/mine/bot1.png')}*/}
+                                   {/*style={styles.dataImgStyle} />*/}
+                        {/*</View>*/}
+                        {/*<View style={styles.dataBoxStyle}>*/}
+                            {/*<Text style={styles.dataServerStyle}>8</Text>*/}
+                            {/*<Text style={styles.dataUnitStyle}>times</Text>*/}
+                        {/*</View>*/}
+                        {/*<Text style={styles.dataTitleStyle}>服务波动总数</Text>*/}
+                    {/*</View>*/}
+                {/*</View>*/}
                 <View style={styles.btnViewStyle}>
                     <Button raised title='退出' buttonStyle={styles.someButtonStyle}/>
                 </View>
@@ -168,7 +181,7 @@ const styles = StyleSheet.create({
         marginLeft: 15,
     },
     btnViewStyle: {
-        marginTop: 15,
+        marginTop: 10,
     },
     someButtonStyle: {
         borderRadius: 5,

@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from 'react-redux';
 import { ListItem, Header, Tile } from 'react-native-elements';
 import { View, TouchableOpacity } from 'react-native';
+import Toast from '../../utils/toast';
 
 class HomeScreen extends React.Component {
 
@@ -25,11 +26,7 @@ class HomeScreen extends React.Component {
                 params: {tag: 'beta', title: '预生产环境服务列表'}
             })
         } else if ('prod' == key) {
-            this.props.navigation.dispatch({
-                type: 'ServersScreen',
-                mode: 'reset',
-                params: {tag: 'prod', title: '正式环境服务列表'}
-            })
+            Toast.show('暂不支持正式环境服务监控');
         }
     }
     render() {

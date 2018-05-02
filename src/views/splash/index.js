@@ -33,7 +33,7 @@ class Splash extends React.Component {
         }, Platform.OS === 'ios' ? 500 : 2000)
         const value = 1;
         if (value && value * 1 === 1) {
-            this.routeName = 'Main'
+            this.routeName = 'Login' // TODO
         } else {
             this.routeName = 'Welcome'
         }

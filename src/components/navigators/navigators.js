@@ -10,15 +10,10 @@ import MinePressedIcon from '../../../assets/img/app/icon_mine_press.png';
 import MineRenderIcon from '../../../assets/img/app/icon_mine.png';
 // SCREEN
 import HomeScreen from '../../views/home/index';
+import LoginScreen from '../../views/login/index';
 import MineScreen from '../../views/mine/index';
 import SplashScreen from '../../views/splash/index';
 import ServersScreen from '../../views/servers/index';
-
-const styles = StyleSheet.create({
-    tabIcon: {
-        resizeMode: 'cover'
-    }
-});
 
 const TabRouteConfigs = {
     Home: {
@@ -84,6 +79,12 @@ export const AppNavigator = StackNavigator({
             currentTab: 'Home'
         }
     },
+    Login: {
+        screen: LoginScreen,
+        navigationOptions: {
+            header: null,
+        }
+    },
     ServersScreen: {
         screen: ServersScreen,
         navigationOptions: {
@@ -114,3 +115,9 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(AppWithNavigationState)
+
+const styles = StyleSheet.create({
+    tabIcon: {
+        resizeMode: 'cover'
+    }
+});
