@@ -6,3 +6,10 @@ export function fetchData(params) {
 		payload: params
 	};
 }
+
+export function loadUser(user) {
+    return {
+        type: ActionTypes.LOAD_USER,
+        payload: user
+    }
+}

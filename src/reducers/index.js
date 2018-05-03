@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux'
 
-import nav from './nav'
+import nav from './nav';
+import app from './app';
 
 const AppReducer = combineReducers({
-    nav,
+    nav, app,
 });
 
 export default AppReducer;

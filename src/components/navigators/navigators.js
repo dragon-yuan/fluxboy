@@ -14,6 +14,7 @@ import LoginScreen from '../../views/login/index';
 import MineScreen from '../../views/mine/index';
 import SplashScreen from '../../views/splash/index';
 import ServersScreen from '../../views/servers/index';
+import AboutScreen from '../../views/mine/about';
 
 const TabRouteConfigs = {
     Home: {
@@ -91,6 +92,12 @@ export const AppNavigator = StackNavigator({
             header: null,
         }
     },
+    AboutScreen: {
+        screen: AboutScreen,
+        navigationOptions: {
+            header: null,
+        }
+    }
 }, {
     // 导航条动画效果：float表示会渐变，类似于iOS的原生效果，screen表示没有渐变。none表示隐藏导航条
     headerMode: 'screen',

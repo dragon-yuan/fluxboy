@@ -1,13 +1,17 @@
 import React from "react";
 import {
-    View, Text, Dimensions, Image, StyleSheet, TouchableOpacity
+    View, Text, Dimensions, Image, StyleSheet, TouchableOpacity, Alert
 } from 'react-native';
-import { Avatar, Header, Icon, Button, } from 'react-native-elements';
+import { Avatar, Header, Icon, Button, ListItem, } from 'react-native-elements';
 // 获取移动端屏幕宽度
 const { width } = Dimensions.get('window');
 import Storage from '../../utils/storage'
+import User from "../../models/user";
+import {fetchData} from "../../components/http/app";
+import {connect} from "react-redux";
+import Toast from '../../utils/toast';
 
-export default class MineScreen extends React.Component {
+class MineScreen extends React.Component {
 
     constructor(props) {
         super(props);
@@ -19,6 +23,31 @@ export default class MineScreen extends React.Component {
             this.setState({loginName: result.loginName});
             this.setState({roleName: result.roleName});
         });
+        this._logoutPress = this._logoutPress.bind(this);
+        this._aboutPress = this._aboutPress.bind(this);
+    }
+
+    // 登出接口
+    _logoutPress() {
+        Alert.alert(
+            '提示',
+            '确定退出吗',
+            [
+                { text: '稍后', onPress: () => {}, style: 'cancel' },
+                { text: '退出', onPress: () => {
+                        this.props.logout({}, this.props.navigation, (fail)=>{});
+                }},
+            ]
+        );
+    }
+
+    // 关于页面跳转
+    _aboutPress() {
+        this.props.navigation.dispatch({
+            type: 'AboutScreen',
+            mode: 'reset',
+            params: {title: '关于'}
+        })
     }
 
     render() {
@@ -34,7 +63,7 @@ export default class MineScreen extends React.Component {
                         rounded
                         source={{uri: "https://img-dragon-resume.oss-cn-beijing.aliyuncs.com/app-fluxboy/head-9t.jpeg"}}
                         activeOpacity={0.7}
-                        containerStyle={{ marginTop: 40, marginLeft: 20 }}
+                        containerStyle={{ marginTop: 70, marginLeft: 20 }}
                     />
                     <Text style={{ color: '#FFF', fontWeight: 'bold',
                         marginLeft: 111, marginTop: -61, fontSize: 17, }}>
@@ -66,51 +95,95 @@ export default class MineScreen extends React.Component {
                         iconStyle={{ alignSelf: 'flex-end', marginRight: 80, marginTop: -40 }}
                     />
                 </View>
-                {/*<View style={styles.dataLineViewStyle}>*/}
-                    {/*<Text style={styles.dataTextStyle}>Data Statistics</Text>*/}
-                    {/*<View style={styles.lineStyle}></View>*/}
-                {/*</View>*/}
-                {/*<View style={styles.dataViewStyle}>*/}
-                    {/*<View style={styles.dataViewContentStyle}>*/}
-                        {/*<View style={styles.dataImgViewStyle}>*/}
-                            {/*<Image source={require('../../../assets/img/mine/bot2.png')}*/}
-                                   {/*style={styles.dataImgStyle} />*/}
-                        {/*</View>*/}
-                        {/*<View style={styles.dataBoxStyle}>*/}
-                            {/*<Text style={styles.dataServerStyle}>36</Text>*/}
-                            {/*<Text style={styles.dataUnitStyle}>num</Text>*/}
-                        {/*</View>*/}
-                        {/*<Text style={styles.dataTitleStyle}>监控服务总数</Text>*/}
-                    {/*</View>*/}
-                    {/*<View style={styles.dataViewContentStyle}>*/}
-                        {/*<View style={styles.dataImgViewStyle}>*/}
-                            {/*<Image source={require('../../../assets/img/mine/bot1.png')}*/}
-                                   {/*style={styles.dataImgStyle} />*/}
-                        {/*</View>*/}
-                        {/*<View style={styles.dataBoxStyle}>*/}
-                            {/*<Text style={styles.dataServerStyle}>8</Text>*/}
-                            {/*<Text style={styles.dataUnitStyle}>times</Text>*/}
-                        {/*</View>*/}
-                        {/*<Text style={styles.dataTitleStyle}>服务波动总数</Text>*/}
-                    {/*</View>*/}
-                {/*</View>*/}
-                <View style={styles.btnViewStyle}>
-                    <Button raised title='退出' buttonStyle={styles.someButtonStyle}/>
+                <View style={{ backgroundColor: '#FFF', }}>
+                    <TouchableOpacity
+                        disabled={true} style={{backgroundColor: '#F5F5F5'}}>
+                        <View>
+                            <ListItem
+                                title={'设置'}
+                                leftIcon={{name: 'settings'}}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={()=>{this._aboutPress()}}>
+                        <View>
+                            <ListItem
+                                title={'关于'}
+                                leftIcon={{name: 'error-outline'}}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                    <View>
+                        <ListItem
+                            title={'版本'}
+                            leftIcon={{name: 'equalizer'}}
+                            rightTitle={'v1.0.0'}
+                            rightTitleStyle={{color: '#696969'}}
+                            hideChevron
+                        />
+                    </View>
+                    <TouchableOpacity
+                        onPress={()=>{this._logoutPress()}}>
+                        <View>
+                            <ListItem
+                                title={'退出'}
+                                leftIcon={{name: 'settings-power'}}
+                                hideChevron
+                            />
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </View>
         );
     }
 }
 
+const mapStateToProps = (state) => {
+    const { user, app } = state;
+    return {
+        user,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        dispatch,
+        logout: (body, navigation) => {
+            dispatch(fetchData({
+                body,
+                api: '/api/uac/auth/login/logout',
+                msg: '退出成功',
+                method: 'POST',
+                successToast: true,
+                success: (data) => {
+                    if (data) {
+                        console.log('logout ', new User());
+                        new User().delete();
+                        // 页面跳转
+                        navigation.dispatch({
+                            type: 'Login',
+                            mode: 'reset',
+                        })
+                    } else {
+                        Toast.show('退出失败');
+                    }
+                },
+                fail: (result) => {
+                    Toast.show(result);
+                },
+            }))
+        },
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MineScreen);
+
 
 const styles = StyleSheet.create({
     myInfoStyle: {
-        marginTop: 10,
-        height: 150,
-        backgroundColor: '#3C435F',
-        width: width - 24,
-        marginLeft: 12,
-        borderRadius: 10,
+        height: 210,
+        backgroundColor: '#18A3FA',
     },
     imageIconsViewStyle: {
         backgroundColor: '#3C3C52',

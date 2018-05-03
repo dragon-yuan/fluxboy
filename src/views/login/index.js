@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import Button from '../../components/common/button';
 // HTTP请求
-import { fetchData } from '../../components/http/app';
+import { fetchData, loadUser } from '../../components/http/app';
 import '../../components/http/setting';
 // 获取移动端屏幕宽度
 const { width } = Dimensions.get('window');
@@ -129,6 +129,8 @@ const mapDispatchToProps = (dispatch) => {
                         roleName: data.roleName,
                         token: data.token,
                     });
+                    // 登录存入数据。暂时未理解
+                    dispatch(loadUser(user));
                     user.save();
                     // 页面跳转
                     navigation.dispatch({
@@ -168,7 +170,7 @@ const styles = StyleSheet.create({
         width: width - width / 5,
         borderColor: '#E1E1E1',
         borderWidth: 1,
-        borderRadius: 12,
+        borderRadius: 8,
         fontWeight: 'bold',
         color: '#333',
     },

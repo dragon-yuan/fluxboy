@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux'
 import SplashScreen from 'react-native-splash-screen'
+import Storage from "../../utils/storage";
 
 const styles = StyleSheet.create({
     backgroundImage:{
@@ -33,7 +34,16 @@ class Splash extends React.Component {
         }, Platform.OS === 'ios' ? 500 : 2000)
         const value = 1;
         if (value && value * 1 === 1) {
-            this.routeName = 'Login' // TODO
+            const user = await Storage.get('user');
+            let token = '';
+            if (user !== null) {
+                token = user.token;
+            }
+            if (token !== null && token !== '') {
+                this.routeName = 'Main' // 有token不登录
+            } else {
+                this.routeName = 'Login' // 没有token走登录
+            }
         } else {
             this.routeName = 'Welcome'
         }

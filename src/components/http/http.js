@@ -31,7 +31,10 @@ export default store => next => action => {
 
 	if (!method) throw new Error(' throw method should not be empty exception');
 
-	const { app } = store.getState();
+	// http header
+    const { app } = store.getState();
+    const user = app.get('user');
+    console.info('http -> init user = ', store.getState());
 
 	const _tBody = { ...body};
 	const tBody = getSortMap(_tBody);
@@ -43,7 +46,9 @@ export default store => next => action => {
 
 	const paramsDic = { ..._body };
 
+
 	headers.client_type = Platform.OS === 'ios' ? 2 : 1;
+    headers.Authorization = user.token ? 'Bearer '+ user.token : '';
 
 	let options = { method, headers, body, }
 
