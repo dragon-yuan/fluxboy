@@ -54,3 +54,9 @@ buck-out/
 
 # Bundle artifact
 *.jsbundle
+
+my-release-key.keystore
+
+#android
+android/*
+android/
