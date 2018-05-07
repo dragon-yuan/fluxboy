@@ -7,7 +7,7 @@ fluxboy是针对鲜易供应链`（www.xianyiscm.com）`服务状态监控的移
 
 项目截图：
 
-![image](https://img-dragon-resume.oss-cn-beijing.aliyuncs.com/app-fluxboy.jpg)
+![image](./assets/git/app-fluxboy.jpg)
 
 #### 依赖
 > UI框架 : react-native-elements
