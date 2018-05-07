@@ -17,8 +17,7 @@ allprojects {
         mavenLocal()
         jcenter()
         maven {
-            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-            url "$rootDir/../node_modules/react-native/android"
+            url "http://mvn.leancloud.cn/nexus/content/repositories/releases"
         }
     }
 }
